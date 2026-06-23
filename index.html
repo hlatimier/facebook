@@ -2,80 +2,37 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SocialBook</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SocialBook Advanced</title>
 
 <style>
-:root{
-    --blue:#1877f2;
-    --bg:#f0f2f5;
-}
-
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:Segoe UI, Arial, sans-serif;
-}
-
 body{
-    background:var(--bg);
+    margin:0;
+    font-family:Segoe UI, Arial;
+    background:#f0f2f5;
 }
 
 header{
     background:white;
-    height:60px;
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    padding:0 20px;
+    padding:12px 20px;
+    font-size:24px;
+    font-weight:bold;
+    color:#1877f2;
+    position:sticky;
+    top:0;
     box-shadow:0 1px 4px rgba(0,0,0,.1);
 }
 
-.logo{
-    color:var(--blue);
-    font-size:32px;
-    font-weight:bold;
-}
-
-.search{
-    width:250px;
-    padding:10px;
-    border:none;
-    border-radius:25px;
-    background:#f0f2f5;
-}
-
 .container{
-    max-width:1200px;
-    margin:20px auto;
-    display:grid;
-    grid-template-columns:250px 1fr 250px;
-    gap:20px;
-}
-
-.card{
-    background:white;
-    border-radius:12px;
-    padding:15px;
-    box-shadow:0 1px 3px rgba(0,0,0,.1);
-}
-
-.menu-item{
-    padding:12px;
-    border-radius:8px;
-    cursor:pointer;
-}
-
-.menu-item:hover{
-    background:#f0f2f5;
+    max-width:700px;
+    margin:auto;
 }
 
 .post{
     background:white;
+    margin:15px 0;
     border-radius:12px;
     overflow:hidden;
-    margin-bottom:20px;
     box-shadow:0 1px 3px rgba(0,0,0,.1);
 }
 
@@ -83,7 +40,7 @@ header{
     display:flex;
     align-items:center;
     gap:10px;
-    padding:15px;
+    padding:12px;
 }
 
 .avatar{
@@ -93,13 +50,12 @@ header{
     background:#ccc;
 }
 
-.post-content{
-    padding:0 15px 15px;
+.content{
+    padding:0 12px 12px;
 }
 
-.post img{
+img{
     width:100%;
-    display:block;
 }
 
 .actions{
@@ -109,130 +65,175 @@ header{
 
 .actions button{
     flex:1;
+    padding:10px;
     border:none;
     background:white;
-    padding:12px;
     cursor:pointer;
-    font-size:15px;
 }
 
 .actions button:hover{
     background:#f0f2f5;
 }
 
-.contact{
+.comment-box{
     padding:10px;
+    border-top:1px solid #eee;
+}
+
+.comment{
+    background:#f0f2f5;
+    padding:6px;
+    margin-top:5px;
     border-radius:8px;
 }
 
-.contact:hover{
+input{
+    width:100%;
+    padding:8px;
+    border:none;
+    margin-top:8px;
+    border-radius:8px;
     background:#f0f2f5;
 }
 
-@media(max-width:900px){
-    .container{
-        grid-template-columns:1fr;
-    }
+.add-post{
+    background:white;
+    padding:10px;
+    border-radius:12px;
+    margin-top:15px;
+}
+
+textarea{
+    width:100%;
+    border:none;
+    background:#f0f2f5;
+    padding:10px;
+    border-radius:8px;
+    resize:none;
+}
+
+.add-post button{
+    margin-top:8px;
+    width:100%;
+    padding:10px;
+    border:none;
+    background:#1877f2;
+    color:white;
+    border-radius:8px;
 }
 </style>
 </head>
+
 <body>
 
-<header>
-    <div class="logo">SocialBook</div>
-    <input type="text" class="search" placeholder="Rechercher...">
-</header>
+<header>SocialBook</header>
 
 <div class="container">
 
-    <aside>
-        <div class="card">
-            <div class="menu-item">🏠 Accueil</div>
-            <div class="menu-item">👥 Amis</div>
-            <div class="menu-item">💬 Messages</div>
-            <div class="menu-item">🎮 Jeux</div>
-            <div class="menu-item">⚙️ Paramètres</div>
-        </div>
-    </aside>
+<div class="add-post">
+    <textarea id="newPost" placeholder="Exprime-toi..."></textarea>
+    <button onclick="addPost()">Publier</button>
+</div>
 
-    <main>
-
-        <div class="post">
-            <div class="post-header">
-                <div class="avatar"></div>
-                <strong>Alice Martin</strong>
-            </div>
-
-            <div class="post-content">
-                Bonjour tout le monde ! ☀️
-            </div>
-
-            <img src="https://picsum.photos/900/450" alt="Image">
-
-            <div class="actions">
-                <button>👍 J'aime</button>
-                <button>💬 Commenter</button>
-                <button onclick="partager()">↗ Partager</button>
-            </div>
-        </div>
-
-        <div class="post">
-            <div class="post-header">
-                <div class="avatar"></div>
-                <strong>Jean Dupont</strong>
-            </div>
-
-            <div class="post-content">
-                Je découvre le développement web aujourd'hui !
-            </div>
-
-            <div class="actions">
-                <button>👍 J'aime</button>
-                <button>💬 Commenter</button>
-                <button onclick="partager()">↗ Partager</button>
-            </div>
-        </div>
-
-    </main>
-
-    <aside>
-        <div class="card">
-            <h3>Contacts</h3>
-            <br>
-            <div class="contact">🟢 Alice</div>
-            <div class="contact">🟢 Thomas</div>
-            <div class="contact">🟢 Julie</div>
-            <div class="contact">🟢 Lucas</div>
-        </div>
-    </aside>
+<div id="feed"></div>
 
 </div>
 
 <script>
-function partager() {
+let posts = JSON.parse(localStorage.getItem("posts")) || [
+    {id:1, user:"Alice", text:"Bonjour ☀️", likes:0, comments:[]},
+    {id:2, user:"Jean", text:"Je crée mon réseau social 🚀", likes:0, comments:[]}
+];
 
-    const lien = window.location.href;
+function save(){
+    localStorage.setItem("posts", JSON.stringify(posts));
+}
 
-    if (navigator.share) {
+function render(){
+    let feed = document.getElementById("feed");
+    feed.innerHTML = "";
 
-        navigator.share({
-            title: document.title,
-            text: "Découvre cette publication !",
-            url: lien
-        });
+    posts.forEach(p => {
 
-    } else {
+        feed.innerHTML += `
+        <div class="post">
 
-        navigator.clipboard.writeText(lien)
-        .then(() => {
-            alert("Lien copié dans le presse-papiers !");
-        })
-        .catch(() => {
-            prompt("Copiez ce lien :", lien);
-        });
+            <div class="post-header">
+                <div class="avatar"></div>
+                <b>${p.user}</b>
+            </div>
 
+            <div class="content">${p.text}</div>
+
+            <img src="https://picsum.photos/800/400?random=${p.id}">
+
+            <div class="actions">
+                <button onclick="like(${p.id})">👍 Like (${p.likes})</button>
+                <button onclick="toggle(${p.id})">💬 Commenter</button>
+                <button onclick="share()">↗ Partager</button>
+            </div>
+
+            <div class="comment-box" id="c-${p.id}" style="display:none">
+
+                <input placeholder="Écrire..."
+                       onkeydown="comment(event,${p.id},this)">
+
+                <div>
+                    ${p.comments.map(c => `<div class="comment">${c}</div>`).join("")}
+                </div>
+
+            </div>
+
+        </div>`;
+    });
+
+    save();
+}
+
+function addPost(){
+    let text = document.getElementById("newPost").value;
+    if(text.trim() === "") return;
+
+    posts.unshift({
+        id:Date.now(),
+        user:"Vous",
+        text:text,
+        likes:0,
+        comments:[]
+    });
+
+    document.getElementById("newPost").value = "";
+    render();
+}
+
+function like(id){
+    let p = posts.find(x => x.id === id);
+    p.likes++;
+    render();
+}
+
+function toggle(id){
+    let box = document.getElementById("c-"+id);
+    box.style.display = box.style.display === "none" ? "block" : "none";
+}
+
+function comment(e,id,input){
+    if(e.key === "Enter"){
+        let p = posts.find(x => x.id === id);
+        p.comments.push(input.value);
+        input.value = "";
+        render();
     }
 }
+
+function share(){
+    navigator.share?.({
+        title:"SocialBook",
+        url:window.location.href
+    }) || alert("Lien copié !");
+}
+
+render();
 </script>
 
 </body>
