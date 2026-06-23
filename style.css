@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>SocialBook</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+    <div class="logo">SocialBook</div>
+    <input type="text" placeholder="Rechercher..." class="search">
+</header>
+
+<div class="container">
+
+    <aside class="sidebar">
+        <ul>
+            <li>🏠 Accueil</li>
+            <li>👥 Amis</li>
+            <li>💬 Messages</li>
+            <li>🔔 Notifications</li>
+            <li>⚙️ Paramètres</li>
+        </ul>
+    </aside>
+
+    <main class="feed">
+
+        <div class="post">
+            <h3>Alice Martin</h3>
+            <p>Bonjour tout le monde ! ☀️</p>
+
+            <div class="actions">
+                <button>👍 J'aime</button>
+                <button>💬 Commenter</button>
+                <button>↗ Partager</button>
+            </div>
+        </div>
+
+        <div class="post">
+            <h3>Jean Dupont</h3>
+            <p>Super journée à la plage !</p>
+
+            <img src="https://picsum.photos/700/400" alt="Photo">
+
+            <div class="actions">
+                <button>👍 J'aime</button>
+                <button>💬 Commenter</button>
+                <button>↗ Partager</button>
+            </div>
+        </div>
+
+    </main>
+
+</div>
+
+</body>
+</html>
