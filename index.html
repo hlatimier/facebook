@@ -2,139 +2,220 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>SocialBook</title>
 
 <style>
+:root{
+    --blue:#1877f2;
+    --bg:#f0f2f5;
+    --card:#ffffff;
+    --text:#1c1e21;
+    --shadow:0 1px 2px rgba(0,0,0,.1);
+}
+
 *{
     margin:0;
     padding:0;
     box-sizing:border-box;
-    font-family:Arial,sans-serif;
+    font-family:Segoe UI,Arial,sans-serif;
 }
 
 body{
-    background:#f0f2f5;
+    background:var(--bg);
+    color:var(--text);
 }
 
 header{
-    background:#1877f2;
-    color:white;
-    padding:15px 20px;
+    position:sticky;
+    top:0;
+    z-index:1000;
+    background:white;
+    height:56px;
+    box-shadow:var(--shadow);
     display:flex;
-    justify-content:space-between;
     align-items:center;
+    justify-content:space-between;
+    padding:0 20px;
 }
 
 .logo{
-    font-size:28px;
-    font-weight:bold;
+    color:var(--blue);
+    font-size:2rem;
+    font-weight:700;
 }
 
 .search{
-    width:250px;
-    padding:8px 12px;
+    width:280px;
+    padding:10px 15px;
     border:none;
-    border-radius:20px;
+    border-radius:50px;
+    background:#f0f2f5;
 }
 
-.container{
-    max-width:1200px;
-    margin:20px auto;
-    display:flex;
+.layout{
+    max-width:1400px;
+    margin:auto;
+    display:grid;
+    grid-template-columns:280px 1fr 280px;
     gap:20px;
+    padding:20px;
 }
 
-.sidebar{
-    width:250px;
+.panel{
+    position:sticky;
+    top:76px;
+    height:fit-content;
 }
 
-.sidebar ul{
-    list-style:none;
-}
-
-.sidebar li{
-    background:white;
+.card{
+    background:var(--card);
+    border-radius:12px;
+    box-shadow:var(--shadow);
     padding:15px;
-    margin-bottom:10px;
+    margin-bottom:16px;
+}
+
+.menu-item{
+    padding:12px;
     border-radius:10px;
     cursor:pointer;
-    transition:0.2s;
 }
 
-.sidebar li:hover{
+.menu-item:hover{
     background:#e4e6eb;
 }
 
-.feed{
-    flex:1;
+.story-row{
+    display:flex;
+    gap:10px;
+    overflow:auto;
+}
+
+.story{
+    min-width:110px;
+    height:180px;
+    border-radius:12px;
+    background:linear-gradient(135deg,#1877f2,#5f9cff);
+    color:white;
+    display:flex;
+    align-items:flex-end;
+    padding:10px;
+    font-weight:bold;
 }
 
 .post{
     background:white;
+    border-radius:12px;
+    box-shadow:var(--shadow);
+    margin-bottom:16px;
+}
+
+.post-header{
     padding:15px;
-    margin-bottom:20px;
-    border-radius:10px;
-    box-shadow:0 2px 5px rgba(0,0,0,0.1);
+    display:flex;
+    align-items:center;
+    gap:10px;
 }
 
-.post h3{
-    margin-bottom:10px;
+.avatar{
+    width:40px;
+    height:40px;
+    border-radius:50%;
+    background:#d8dadf;
 }
 
-.post img{
+.post-content{
+    padding:0 15px 15px;
+}
+
+.post-image{
     width:100%;
-    border-radius:10px;
-    margin-top:10px;
+    display:block;
 }
 
 .actions{
     display:flex;
-    justify-content:space-around;
-    margin-top:15px;
-    padding-top:10px;
     border-top:1px solid #ddd;
 }
 
 .actions button{
-    background:none;
+    flex:1;
     border:none;
-    padding:10px;
+    background:white;
+    padding:12px;
     cursor:pointer;
-    border-radius:5px;
 }
 
 .actions button:hover{
-    background:#f0f2f5;
+    background:#f2f2f2;
+}
+
+.contact{
+    padding:10px;
+    border-radius:8px;
+}
+
+.contact:hover{
+    background:#e4e6eb;
+}
+
+@media(max-width:1000px){
+    .layout{
+        grid-template-columns:1fr;
+    }
+
+    .panel{
+        display:none;
+    }
 }
 </style>
-
 </head>
+
 <body>
 
 <header>
     <div class="logo">SocialBook</div>
-    <input type="text" class="search" placeholder="Rechercher...">
+    <input class="search" placeholder="Rechercher">
 </header>
 
-<div class="container">
+<div class="layout">
 
-    <aside class="sidebar">
-        <ul>
-            <li>🏠 Accueil</li>
-            <li>👥 Amis</li>
-            <li>💬 Messages</li>
-            <li>🔔 Notifications</li>
-            <li>⚙️ Paramètres</li>
-        </ul>
+    <aside class="panel">
+        <div class="card">
+            <div class="menu-item">🏠 Accueil</div>
+            <div class="menu-item">👥 Amis</div>
+            <div class="menu-item">🎮 Jeux</div>
+            <div class="menu-item">📺 Vidéos</div>
+            <div class="menu-item">⚙️ Paramètres</div>
+        </div>
     </aside>
 
-    <main class="feed">
+    <main>
+
+        <div class="card">
+            <div class="story-row">
+                <div class="story">Votre story</div>
+                <div class="story">Alice</div>
+                <div class="story">Thomas</div>
+                <div class="story">Julie</div>
+            </div>
+        </div>
 
         <div class="post">
-            <h3>Alice Martin</h3>
-            <p>Bonjour tout le monde ! ☀️</p>
+            <div class="post-header">
+                <div class="avatar"></div>
+                <strong>Alice Martin</strong>
+            </div>
 
+            <div class="post-content">
+                Belle journée aujourd'hui ☀️
+            </div>
+
+            <img class="post-image"
+                 src="https://picsum.photos/900/450"
+                 alt="">
+                 
             <div class="actions">
                 <button>👍 J'aime</button>
                 <button>💬 Commenter</button>
@@ -143,21 +224,14 @@ header{
         </div>
 
         <div class="post">
-            <h3>Jean Dupont</h3>
-            <p>Super journée à la plage !</p>
-
-            <img src="https://picsum.photos/700/400" alt="Image">
-
-            <div class="actions">
-                <button>👍 J'aime</button>
-                <button>💬 Commenter</button>
-                <button>↗ Partager</button>
+            <div class="post-header">
+                <div class="avatar"></div>
+                <strong>Jean Dupont</strong>
             </div>
-        </div>
 
-        <div class="post">
-            <h3>Marie Bernard</h3>
-            <p>Je découvre le développement web aujourd'hui ! 🚀</p>
+            <div class="post-content">
+                Je travaille sur mon premier site web !
+            </div>
 
             <div class="actions">
                 <button>👍 J'aime</button>
@@ -167,6 +241,17 @@ header{
         </div>
 
     </main>
+
+    <aside class="panel">
+        <div class="card">
+            <h3>Contacts</h3>
+            <br>
+            <div class="contact">🟢 Alice</div>
+            <div class="contact">🟢 Thomas</div>
+            <div class="contact">🟢 Julie</div>
+            <div class="contact">🟢 Lucas</div>
+        </div>
+    </aside>
 
 </div>
 
