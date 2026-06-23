@@ -2,134 +2,102 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>SocialBook</title>
 
 <style>
 :root{
     --blue:#1877f2;
     --bg:#f0f2f5;
-    --card:#ffffff;
-    --text:#1c1e21;
-    --shadow:0 1px 2px rgba(0,0,0,.1);
 }
 
 *{
     margin:0;
     padding:0;
     box-sizing:border-box;
-    font-family:Segoe UI,Arial,sans-serif;
+    font-family:Segoe UI, Arial, sans-serif;
 }
 
 body{
     background:var(--bg);
-    color:var(--text);
 }
 
 header{
-    position:sticky;
-    top:0;
-    z-index:1000;
     background:white;
-    height:56px;
-    box-shadow:var(--shadow);
+    height:60px;
     display:flex;
     align-items:center;
     justify-content:space-between;
     padding:0 20px;
+    box-shadow:0 1px 4px rgba(0,0,0,.1);
 }
 
 .logo{
     color:var(--blue);
-    font-size:2rem;
-    font-weight:700;
+    font-size:32px;
+    font-weight:bold;
 }
 
 .search{
-    width:280px;
-    padding:10px 15px;
+    width:250px;
+    padding:10px;
     border:none;
-    border-radius:50px;
+    border-radius:25px;
     background:#f0f2f5;
 }
 
-.layout{
-    max-width:1400px;
-    margin:auto;
+.container{
+    max-width:1200px;
+    margin:20px auto;
     display:grid;
-    grid-template-columns:280px 1fr 280px;
+    grid-template-columns:250px 1fr 250px;
     gap:20px;
-    padding:20px;
-}
-
-.panel{
-    position:sticky;
-    top:76px;
-    height:fit-content;
 }
 
 .card{
-    background:var(--card);
+    background:white;
     border-radius:12px;
-    box-shadow:var(--shadow);
     padding:15px;
-    margin-bottom:16px;
+    box-shadow:0 1px 3px rgba(0,0,0,.1);
 }
 
 .menu-item{
     padding:12px;
-    border-radius:10px;
+    border-radius:8px;
     cursor:pointer;
 }
 
 .menu-item:hover{
-    background:#e4e6eb;
-}
-
-.story-row{
-    display:flex;
-    gap:10px;
-    overflow:auto;
-}
-
-.story{
-    min-width:110px;
-    height:180px;
-    border-radius:12px;
-    background:linear-gradient(135deg,#1877f2,#5f9cff);
-    color:white;
-    display:flex;
-    align-items:flex-end;
-    padding:10px;
-    font-weight:bold;
+    background:#f0f2f5;
 }
 
 .post{
     background:white;
     border-radius:12px;
-    box-shadow:var(--shadow);
-    margin-bottom:16px;
+    overflow:hidden;
+    margin-bottom:20px;
+    box-shadow:0 1px 3px rgba(0,0,0,.1);
 }
 
 .post-header{
-    padding:15px;
     display:flex;
     align-items:center;
     gap:10px;
+    padding:15px;
 }
 
 .avatar{
     width:40px;
     height:40px;
     border-radius:50%;
-    background:#d8dadf;
+    background:#ccc;
 }
 
 .post-content{
     padding:0 15px 15px;
 }
 
-.post-image{
+.post img{
     width:100%;
     display:block;
 }
@@ -145,10 +113,11 @@ header{
     background:white;
     padding:12px;
     cursor:pointer;
+    font-size:15px;
 }
 
 .actions button:hover{
-    background:#f2f2f2;
+    background:#f0f2f5;
 }
 
 .contact{
@@ -157,50 +126,36 @@ header{
 }
 
 .contact:hover{
-    background:#e4e6eb;
+    background:#f0f2f5;
 }
 
-@media(max-width:1000px){
-    .layout{
+@media(max-width:900px){
+    .container{
         grid-template-columns:1fr;
-    }
-
-    .panel{
-        display:none;
     }
 }
 </style>
 </head>
-
 <body>
 
 <header>
     <div class="logo">SocialBook</div>
-    <input class="search" placeholder="Rechercher">
+    <input type="text" class="search" placeholder="Rechercher...">
 </header>
 
-<div class="layout">
+<div class="container">
 
-    <aside class="panel">
+    <aside>
         <div class="card">
             <div class="menu-item">🏠 Accueil</div>
             <div class="menu-item">👥 Amis</div>
+            <div class="menu-item">💬 Messages</div>
             <div class="menu-item">🎮 Jeux</div>
-            <div class="menu-item">📺 Vidéos</div>
             <div class="menu-item">⚙️ Paramètres</div>
         </div>
     </aside>
 
     <main>
-
-        <div class="card">
-            <div class="story-row">
-                <div class="story">Votre story</div>
-                <div class="story">Alice</div>
-                <div class="story">Thomas</div>
-                <div class="story">Julie</div>
-            </div>
-        </div>
 
         <div class="post">
             <div class="post-header">
@@ -209,17 +164,15 @@ header{
             </div>
 
             <div class="post-content">
-                Belle journée aujourd'hui ☀️
+                Bonjour tout le monde ! ☀️
             </div>
 
-            <img class="post-image"
-                 src="https://picsum.photos/900/450"
-                 alt="">
-                 
+            <img src="https://picsum.photos/900/450" alt="Image">
+
             <div class="actions">
                 <button>👍 J'aime</button>
                 <button>💬 Commenter</button>
-                <button>↗ Partager</button>
+                <button onclick="partager()">↗ Partager</button>
             </div>
         </div>
 
@@ -230,19 +183,19 @@ header{
             </div>
 
             <div class="post-content">
-                Je travaille sur mon premier site web !
+                Je découvre le développement web aujourd'hui !
             </div>
 
             <div class="actions">
                 <button>👍 J'aime</button>
                 <button>💬 Commenter</button>
-                <button>↗ Partager</button>
+                <button onclick="partager()">↗ Partager</button>
             </div>
         </div>
 
     </main>
 
-    <aside class="panel">
+    <aside>
         <div class="card">
             <h3>Contacts</h3>
             <br>
@@ -254,6 +207,33 @@ header{
     </aside>
 
 </div>
+
+<script>
+function partager() {
+
+    const lien = window.location.href;
+
+    if (navigator.share) {
+
+        navigator.share({
+            title: document.title,
+            text: "Découvre cette publication !",
+            url: lien
+        });
+
+    } else {
+
+        navigator.clipboard.writeText(lien)
+        .then(() => {
+            alert("Lien copié dans le presse-papiers !");
+        })
+        .catch(() => {
+            prompt("Copiez ce lien :", lien);
+        });
+
+    }
+}
+</script>
 
 </body>
 </html>
