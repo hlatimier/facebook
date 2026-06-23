@@ -1,61 +1,285 @@
-<?php
-require 'config.php';
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SocialBook</title>
 
-if(!isset($_SESSION['user_id'])){
-    header("Location: login.php");
-    exit;
+<style>
+:root{
+    --blue:#1877f2;
+    --bg:#f0f2f5;
+    --card:#ffffff;
+    --text:#1c1e21;
+    --shadow:0 1px 2px rgba(0,0,0,.1);
 }
 
-$user_id = $_SESSION['user_id'];
-?>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Segoe UI,Arial,sans-serif;
+}
 
-<h1>SocialBook</h1>
+body{
+    background:var(--bg);
+    color:var(--text);
+}
 
-<a href="logout.php">Déconnexion</a>
+header{
+    position:sticky;
+    top:0;
+    z-index:1000;
+    background:white;
+    height:56px;
+    box-shadow:var(--shadow);
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 20px;
+}
 
-<!-- POST -->
-<form method="post" action="post.php">
-<textarea name="contenu"></textarea>
-<button>Publier</button>
-</form>
+.logo{
+    color:var(--blue);
+    font-size:2rem;
+    font-weight:700;
+}
 
-<hr>
+.search{
+    width:280px;
+    padding:10px 15px;
+    border:none;
+    border-radius:50px;
+    background:#f0f2f5;
+}
 
-<?php
-$posts = $pdo->query("
-SELECT p.*, u.nom
-FROM publications p
-JOIN utilisateurs u ON u.id = p.utilisateur_id
-ORDER BY p.id DESC
-");
+.layout{
+    max-width:1400px;
+    margin:auto;
+    display:grid;
+    grid-template-columns:280px 1fr 280px;
+    gap:20px;
+    padding:20px;
+}
 
-while($p = $posts->fetch()){
-    
-    // likes
-    $like = $pdo->prepare("
-        SELECT COUNT(*) FROM likes_publications
-        WHERE publication_id=?
-    ");
-    $like->execute([$p['id']]);
-    $nb = $like->fetchColumn();
-?>
+.panel{
+    position:sticky;
+    top:76px;
+    height:fit-content;
+}
 
-<div style="border:1px solid #ccc;margin:10px;padding:10px;">
-    <b><?= $p['nom'] ?></b><br>
-    <?= $p['contenu'] ?>
+.card{
+    background:var(--card);
+    border-radius:12px;
+    box-shadow:var(--shadow);
+    padding:15px;
+    margin-bottom:16px;
+}
 
-    <br><br>
+.menu-item{
+    padding:12px;
+    border-radius:10px;
+    cursor:pointer;
+}
 
-    <a href="like.php?id=<?= $p['id'] ?>">
-        👍 Like (<?= $nb ?>)
-    </a>
+.menu-item:hover{
+    background:#e4e6eb;
+}
 
-    <form method="post" action="comment.php">
-        <input name="contenu">
-        <input type="hidden" name="id" value="<?= $p['id'] ?>">
-        <button>Commenter</button>
-    </form>
+.story-row{
+    display:flex;
+    gap:10px;
+    overflow:auto;
+}
+
+.story{
+    min-width:110px;
+    height:180px;
+    border-radius:12px;
+    background:linear-gradient(135deg,#1877f2,#5f9cff);
+    color:white;
+    display:flex;
+    align-items:flex-end;
+    padding:10px;
+    font-weight:bold;
+}
+
+.post{
+    background:white;
+    border-radius:12px;
+    box-shadow:var(--shadow);
+    margin-bottom:16px;
+}
+
+.post-header{
+    padding:15px;
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.avatar{
+    width:40px;
+    height:40px;
+    border-radius:50%;
+    background:#d8dadf;
+}
+
+.post-content{
+    padding:0 15px 15px;
+}
+
+.post-image{
+    width:100%;
+    display:block;
+}
+
+.actions{
+    display:flex;
+    border-top:1px solid #ddd;
+}
+
+.actions button{
+    flex:1;
+    border:none;
+    background:white;
+    padding:12px;
+    cursor:pointer;
+}
+
+.actions button:hover{
+    background:#f2f2f2;
+}
+
+.contact{
+    padding:10px;
+    border-radius:8px;
+}
+
+.contact:hover{
+    background:#e4e6eb;
+}
+
+@media(max-width:1000px){
+    .layout{
+        grid-template-columns:1fr;
+    }
+
+    .panel{
+        display:none;
+    }
+}
+</style>
+</head>
+<script>
+function partager() {
+
+    const url = window.location.href;
+
+    if (navigator.share) {
+
+        navigator.share({
+            title: document.title,
+            text: "Regarde cette publication !",
+            url: url
+        })
+        .catch(err => console.log(err));
+
+    } else {
+
+        navigator.clipboard.writeText(url)
+        .then(() => {
+            alert("Lien copié dans le presse-papiers !");
+        })
+        .catch(() => {
+            prompt("Copiez ce lien :", url);
+        });
+
+    }
+}
+</script>
+<body>
+
+<header>
+    <div class="logo">SocialBook</div>
+    <input class="search" placeholder="Rechercher">
+</header>
+
+<div class="layout">
+
+    <aside class="panel">
+        <div class="card">
+            <div class="menu-item">🏠 Accueil</div>
+            <div class="menu-item">👥 Amis</div>
+            <div class="menu-item">🎮 Jeux</div>
+            <div class="menu-item">📺 Vidéos</div>
+            <div class="menu-item">⚙️ Paramètres</div>
+        </div>
+    </aside>
+
+    <main>
+
+        <div class="card">
+            <div class="story-row">
+                <div class="story">Votre story</div>
+                <div class="story">Alice</div>
+                <div class="story">Thomas</div>
+                <div class="story">Julie</div>
+            </div>
+        </div>
+
+        <div class="post">
+            <div class="post-header">
+                <div class="avatar"></div>
+                <strong>Alice Martin</strong>
+            </div>
+
+            <div class="post-content">
+                Belle journée aujourd'hui ☀️
+            </div>
+
+            <img class="post-image"
+                 src="https://picsum.photos/900/450"
+                 alt="">
+                 
+            <div class="actions">
+                <button>👍 J'aime</button>
+                <button>💬 Commenter</button>
+                <button>↗ Partager</button>
+            </div>
+        </div>
+
+        <div class="post">
+            <div class="post-header">
+                <div class="avatar"></div>
+                <strong>Jean Dupont</strong>
+            </div>
+
+            <div class="post-content">
+                Je travaille sur mon premier site web !
+            </div>
+
+            <div class="actions">
+                <button>👍 J'aime</button>
+                <button>💬 Commenter</button>
+                <button>↗ Partager</button>
+            </div>
+        </div>
+
+    </main>
+
+    <aside class="panel">
+        <div class="card">
+            <h3>Contacts</h3>
+            <br>
+            <div class="contact">🟢 Alice</div>
+            <div class="contact">🟢 Thomas</div>
+            <div class="contact">🟢 Julie</div>
+            <div class="contact">🟢 Lucas</div>
+        </div>
+    </aside>
 
 </div>
 
-<?php } ?>
+</body>
+</html>
